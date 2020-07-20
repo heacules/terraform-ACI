@@ -22,8 +22,8 @@ locals {
 }
 
 resource "aci_tenant" "terraform-rocks_2"{
-   name = "terraform-rocks_2"
-   description ="This tenant is created by terraform"
+   name = "_terraform-rocks_2"
+   description ="by terraform: https://github.com/heacules/terraform-ACI"
 }
 
 resource "aci_vrf" "vrf_a"{
