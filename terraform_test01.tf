@@ -4,9 +4,12 @@ terraform {
 
 locals {
  #vrf = "vrf_a"
+ tenant = {
+   allstars = "uni/tn-ALLSTARS"
+ }
   vrf = {
     1 = "VRF_A"
-    2 = "VRF_B"
+    2 = "VRF_TO_ALL"
   }
 }
 
@@ -58,11 +61,9 @@ resource "aci_application_epg" "terraform_epg"{
     application_profile_dn = aci_application_profile.test-app.id
     name = "terraform_epg"
 }
-#
-#data "aci_tenant" "import_2"{
-#  name = "import_test"
-#}
+#ALLSTARS
+
 #resource "aci_vrf" "vrf_b"{
-#   tenant_dn = aci_tenant.import_test.id
-#   name = locals.vrf.2  
+#   tenant_dn = local.tenant.allstars
+#   name = local.vrf.2  
 #}
