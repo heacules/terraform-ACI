@@ -32,7 +32,7 @@ resource "aci_application_profile" "ap_01" {
     annotation                    = "tag_epg"
     exception_tag               = "0"
     flood_on_encap               = "disabled"
-    fwd_ctrl                    = "none"
+    #fwd_ctrl                    = "none"
     has_mcast_source            = "no"
     is_attr_based_epg           = "no"
     match_t                     = "AtleastOne"
@@ -42,3 +42,13 @@ resource "aci_application_profile" "ap_01" {
     prio                            = "unspecified"
     shutdown                    = "no"
   }
+
+    resource "aci_subnet" "foosubnet" {
+        bridge_domain_dn = aci_bridge_domain.terraform_bridge.id
+        ip               = var.ip
+        annotation       = "${var.type}-${var.service}"
+       # name_alias       = "alias_subnet"
+        preferred        = "no"
+        scope            = "private"
+        virtual          = "yes"
+    } 

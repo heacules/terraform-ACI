@@ -20,7 +20,7 @@ module "autoswitch"{
   bridge = "what_it_worked"
   type = "web_farm"
   service = "it_host"
-  ip = ""
+  ip = "10.0.3.1/24"
 }
 
 
