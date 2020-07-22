@@ -31,7 +31,8 @@ resource "aci_tenant" "terraform-rocks_2"{
 
 resource "aci_vrf" "vrf_a"{
    tenant_dn = aci_tenant.terraform-rocks_2.id
-   name = local.vrf.1
+   #name = local.vrf.1
+   name = var.vrf_name
 }
 
 #resource "aci_tenant" "test-tenant" {
