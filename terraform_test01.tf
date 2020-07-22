@@ -2,17 +2,6 @@ terraform {
   required_version = ">= 0.12"
 }
 
-locals {
- #vrf = "vrf_a"
- tenant = {
-   allstars = "uni/tn-ALLSTARS"
- }
-  vrf = {
-    1 = "VRF_A"
-    2 = "VRF_TO_ALL"
-  }
-}
-
  provider "aci" {
     #required_version = "= 0.3.3"
     # cisco-aci user name
@@ -24,47 +13,16 @@ locals {
     insecure = true
 }
 
-resource "aci_tenant" "terraform-rocks_2"{
-   name = "_terraform-rocks_2"
-   description ="by terraform: https://github.com/heacules/terraform-ACI"
+module "autoswitch"{
+  source =".//auto_switch"
+  tenant ="_terrform_hex_module"
+  vrf_name = "rigtig_hex"
+  bridge = "what_it_worked"
+  type = "web_farm"
+  service = "it_host"
+  ip = ""
 }
 
-resource "aci_vrf" "vrf_a"{
-   tenant_dn = aci_tenant.terraform-rocks_2.id
-   #name = local.vrf.1
-   name = var.vrf_name
-}
 
-#resource "aci_tenant" "test-tenant" {
-#  name        = "test-tenant"
-#  description = "This tenant is created by terraform"
-#}
 
-resource "aci_application_profile" "test-app" {
-  tenant_dn   = aci_tenant.terraform-rocks_2.id
-  name        = "test-app"
-  description = "This app profile is created by terraform"
-}
 
-resource "aci_bridge_domain" "terraform_bridge"{
-    tenant_dn = aci_tenant.terraform-rocks_2.id
-    name = "Terraform_bridge"
-    arp_flood = "yes"
-    relation_fv_rs_ctx = aci_vrf.vrf_a.id
-}
-
-resource "aci_subnet" "terraformsubnet" {
-    bridge_domain_dn = aci_bridge_domain.terraform_bridge.id
-    ip = "10.60.23.1/24"
-    #scope = "private"
-}
-resource "aci_application_epg" "terraform_epg"{
-    application_profile_dn = aci_application_profile.test-app.id
-    name = "terraform_epg"
-}
-#ALLSTARS
-
-#resource "aci_vrf" "vrf_b"{
-#   tenant_dn = local.tenant.allstars
-#   name = local.vrf.2  
-#}
